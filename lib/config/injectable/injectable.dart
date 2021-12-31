@@ -9,7 +9,7 @@ final EnvironmentConfig? envConfig = getIt<EnvironmentConfig>();
 @injectableInit
 Future<void> initConfig() async {
   await manualInitializations();
-  await $initGetIt(getIt, environment: EnvironmentConfig.env);
+  $initGetIt(getIt, environment: EnvironmentConfig.env);
 }
 
 Future<void> manualInitializations() async {

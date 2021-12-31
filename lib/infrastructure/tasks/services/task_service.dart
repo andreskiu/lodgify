@@ -7,7 +7,7 @@ import 'package:injectable/injectable.dart';
 
 import 'interfaces/i_task_data_provider.dart';
 
-@lazySingleton
+@LazySingleton(as: ITasksService)
 class TaskService extends ITasksService {
   final ITasksDataProvider provider;
   TaskService({
