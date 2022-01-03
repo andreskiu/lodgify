@@ -99,6 +99,7 @@ class _CardHeaderState extends State<CardHeader> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Text(
           'Lodgify Grouped Tasks',
@@ -106,6 +107,9 @@ class _CardHeaderState extends State<CardHeader> with TickerProviderStateMixin {
             fontSize: 24,
             fontWeight: FontWeight.bold,
           ),
+        ),
+        const SizedBox(
+          height: 10,
         ),
         Consumer<TaskPageState>(builder: (context, state, child) {
           return CustomLinearIndicator(
@@ -151,13 +155,21 @@ class _GroupViewState extends State<GroupView> {
               padding: const EdgeInsets.only(left: 20),
               child: Row(
                 children: [
-                  const Icon(Icons.assignment_outlined),
+                  Icon(
+                    Icons.assignment_outlined,
+                    color: expanded ? ColorPalette.green : Colors.black,
+                  ),
                   const SizedBox(
                     width: 15,
                   ),
                   FittedBox(
                     fit: BoxFit.scaleDown,
-                    child: Text(widget.groups[groupIndex].name),
+                    child: Text(
+                      widget.groups[groupIndex].name,
+                      style: TextStyle(
+                        color: expanded ? ColorPalette.green : Colors.black,
+                      ),
+                    ),
                   ),
                   const Spacer(),
                   Text(expanded ? 'Hide' : "Show"),
