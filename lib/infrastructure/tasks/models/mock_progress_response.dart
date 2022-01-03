@@ -3,13 +3,6 @@ import 'dart:convert';
 import 'package:challenge/domain/tasks/models/group.dart';
 import 'package:challenge/domain/tasks/models/task.dart';
 
-// class MockProgressResponse {
-//   final List<GroupResponse> groups;
-//   MockProgressResponse({
-//     required this.groups,
-//   });
-// }
-
 class GroupResponse {
   final String name;
   final List<TaskResponse> tasks;
@@ -48,17 +41,19 @@ class GroupResponse {
 
 class TaskResponse {
   final String description;
+  final String? name;
   final int value;
   final bool checked;
   const TaskResponse({
     required this.description,
+    this.name = '',
     required this.value,
     required this.checked,
   });
 
   Task toEntity() {
     return Task(
-      description: description,
+      description: description.isEmpty ? name ?? '' : description,
       checked: checked,
       value: value,
     );
@@ -67,6 +62,7 @@ class TaskResponse {
   Map<String, dynamic> toMap() {
     return {
       'description': description,
+      'name': name,
       'value': value,
       'checked': checked,
     };
@@ -75,6 +71,7 @@ class TaskResponse {
   factory TaskResponse.fromMap(Map<String, dynamic> map) {
     return TaskResponse(
       description: map['description'] ?? '',
+      name: map['name'],
       value: map['value']?.toInt() ?? 0,
       checked: map['checked'] ?? false,
     );
