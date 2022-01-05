@@ -46,33 +46,32 @@ class _MyHomePageState extends State<MyHomePage> {
             return ChangeNotifierProvider<TaskPageState>.value(
                 value: snapshot.data!,
                 builder: (context, child) {
-                  return Center(
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                      child: Card(
-                        child: SingleChildScrollView(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const SizedBox(
-                                height: 10,
+                  return Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Card(
+                      child: SingleChildScrollView(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            const Padding(
+                              padding: EdgeInsets.symmetric(
+                                vertical: 20,
+                                horizontal: 20,
                               ),
-                              const Padding(
-                                padding: EdgeInsets.symmetric(
-                                  vertical: 20,
-                                  horizontal: 20,
-                                ),
-                                child: CardHeader(),
-                              ),
-                              Consumer<TaskPageState>(
-                                builder: (context, state, child) {
-                                  return GroupView(
-                                    groups: state.groups,
-                                  );
-                                },
-                              ),
-                            ],
-                          ),
+                              child: CardHeader(),
+                            ),
+                            Consumer<TaskPageState>(
+                              builder: (context, state, child) {
+                                return GroupView(
+                                  groups: state.groups,
+                                );
+                              },
+                            ),
+                          ],
                         ),
                       ),
                     ),
@@ -182,6 +181,7 @@ class _GroupViewState extends State<GroupView> {
           body: ListView.builder(
             shrinkWrap: true,
             itemCount: widget.groups[groupIndex].tasks.length,
+            physics: const NeverScrollableScrollPhysics(),
             itemBuilder: (context, taskIndex) {
               return TaskView(
                 group: widget.groups[groupIndex],
