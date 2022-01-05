@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:challenge/application/tasks/task_page_state.dart';
 import 'package:challenge/domain/tasks/models/group.dart';
 import 'package:challenge/domain/tasks/models/task.dart';
+import 'package:challenge/presentation/core/responsivity/responsive_calculations.dart';
 import 'package:challenge/presentation/palette/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
@@ -47,22 +48,26 @@ class _MyHomePageState extends State<MyHomePage> {
                 value: snapshot.data!,
                 builder: (context, child) {
                   return Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    padding: EdgeInsets.symmetric(
+                      horizontal: Info.horizontalUnit * 2,
+                      vertical: Info.verticalUnit * 2,
+                    ),
                     child: Card(
+                      elevation: 4,
                       child: SingleChildScrollView(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            const SizedBox(
-                              height: 10,
+                            SizedBox(
+                              height: Info.verticalUnit * 2,
                             ),
-                            const Padding(
+                            Padding(
                               padding: EdgeInsets.symmetric(
-                                vertical: 20,
-                                horizontal: 20,
+                                vertical: Info.verticalUnit * 2,
+                                horizontal: Info.horizontalUnit * 5,
                               ),
-                              child: CardHeader(),
+                              child: const CardHeader(),
                             ),
                             Consumer<TaskPageState>(
                               builder: (context, state, child) {
@@ -107,8 +112,8 @@ class _CardHeaderState extends State<CardHeader> with TickerProviderStateMixin {
             fontWeight: FontWeight.bold,
           ),
         ),
-        const SizedBox(
-          height: 10,
+        SizedBox(
+          height: Info.verticalUnit * 2,
         ),
         Consumer<TaskPageState>(builder: (context, state, child) {
           return CustomLinearIndicator(
@@ -151,15 +156,19 @@ class _GroupViewState extends State<GroupView> {
         return ExpansionPanel(
           headerBuilder: (context, expanded) {
             return Padding(
-              padding: const EdgeInsets.only(left: 20),
+              padding: EdgeInsets.only(
+                left: Info.horizontalUnit * 5,
+              ),
               child: Row(
                 children: [
                   Icon(
-                    Icons.assignment_outlined,
+                    expanded
+                        ? Icons.assignment_turned_in_outlined
+                        : Icons.assignment_outlined,
                     color: expanded ? ColorPalette.green : Colors.black,
                   ),
-                  const SizedBox(
-                    width: 15,
+                  SizedBox(
+                    width: Info.horizontalUnit * 4,
                   ),
                   FittedBox(
                     fit: BoxFit.scaleDown,
@@ -183,9 +192,15 @@ class _GroupViewState extends State<GroupView> {
             itemCount: widget.groups[groupIndex].tasks.length,
             physics: const NeverScrollableScrollPhysics(),
             itemBuilder: (context, taskIndex) {
-              return TaskView(
-                group: widget.groups[groupIndex],
-                task: widget.groups[groupIndex].tasks[taskIndex],
+              return Padding(
+                padding: EdgeInsets.only(
+                  left: Info.horizontalUnit * 8,
+                  bottom: Info.verticalUnit,
+                ),
+                child: TaskView(
+                  group: widget.groups[groupIndex],
+                  task: widget.groups[groupIndex].tasks[taskIndex],
+                ),
               );
             },
           ),
@@ -218,8 +233,8 @@ class TaskView extends StatelessWidget {
             GetIt.I.get<TaskPageState>().checkTask(group, task, checked!);
           },
         ),
-        const SizedBox(
-          width: 10,
+        SizedBox(
+          width: Info.horizontalUnit * 2,
         ),
         Text(task.description),
       ],

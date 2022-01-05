@@ -1,3 +1,4 @@
+import 'package:challenge/presentation/core/responsivity/responsive_calculations.dart';
 import 'package:flutter/material.dart';
 
 import 'config/injectable/injectable.dart';
@@ -29,7 +30,10 @@ class MyApp extends StatelessWidget {
           color: ColorPalette.green,
         ),
       ),
-      home: const MyHomePage(title: 'TO-DO List'),
+      builder: (context, router) {
+        Info(mediaQueryData: MediaQuery.of(context));
+        return const MyHomePage(title: 'TO-DO List');
+      },
     );
   }
 }
